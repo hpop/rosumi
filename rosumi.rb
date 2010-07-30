@@ -1,7 +1,8 @@
-require 'json'
-require 'net/http'
-require 'net/https'
-require 'base64'
+ require "uri"
+ require 'json'
+ require 'net/http'
+ require 'net/https'
+ require 'base64'
 
 class Rosumi
   
