@@ -16,8 +16,6 @@ class Rosumi
     @pass = pass
     
     @devices = []
-    
-    puts 'Init'
 
     @http = Net::HTTP.new(URL, PORT)
     @http.use_ssl=true
@@ -27,7 +25,7 @@ class Rosumi
   
   def updateDevices
     post = {'clientContext' => {'appName'       => 'FindMyiPhone',
-                                'appVersion'    => '1.2.1',
+                                'appVersion'    => '1.4',
                                 'buildVersion'  => '57',
                                 'deviceUDID'    => '0cf3dc989ff812adb0b202baed4f37274b210853',
                                 'inactiveTime'  => 2147483647,
@@ -49,7 +47,7 @@ class Rosumi
 		headers = {
 		  'Authorization' => "Basic #{auth}",
       'User-Agent' => 'Find iPhone/1.2.1 MeKit (iPad: iPhone OS/4.2.1)',
-      'X-Apple-Realm-Support' => '1.2.1',
+      'X-Apple-Realm-Support' => '1.0',
       'Content-Type' => 'application/json; charset=utf-8',
       'X-Client-Name' => 'Steves iPad',
       'X-Client-Uuid' => '0cf3dc491ff812adb0b202baed4f94873b210853'
