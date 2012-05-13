@@ -17,19 +17,21 @@ class Rosumi
     
     @devices = []
     
+    puts 'Init'
+
     @http = Net::HTTP.new(URL, PORT)
     @http.use_ssl=true
-    
+
     self.updateDevices()
   end
   
   def updateDevices
     post = {'clientContext' => {'appName'       => 'FindMyiPhone',
-                                'appVersion'    => '1.0',
+                                'appVersion'    => '1.2.1',
                                 'buildVersion'  => '57',
                                 'deviceUDID'    => '0cf3dc989ff812adb0b202baed4f37274b210853',
                                 'inactiveTime'  => 2147483647,
-                                'osVersion'     => '3.2',
+                                'osVersion'     => '4.2',
                                 'productType'   => 'iPad1,1'
                                 }};
     json_devices = self.post("/fmipservice/device/#{@user}/initClient", post)
@@ -42,13 +44,12 @@ class Rosumi
   end
   
   def post(path, data)
-		
 		auth = Base64.encode64(@user+':'+@pass);
 		puts auth;
 		headers = {
 		  'Authorization' => "Basic #{auth}",
-      'User-Agent' => 'Find iPhone/1.0 (iPad: iPhone OS/3.2)',
-      'X-Apple-Realm-Support' => '1.0',
+      'User-Agent' => 'Find iPhone/1.2.1 MeKit (iPad: iPhone OS/4.2.1)',
+      'X-Apple-Realm-Support' => '1.2.1',
       'Content-Type' => 'application/json; charset=utf-8',
       'X-Client-Name' => 'Steves iPad',
       'X-Client-Uuid' => '0cf3dc491ff812adb0b202baed4f94873b210853'
