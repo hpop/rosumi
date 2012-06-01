@@ -85,6 +85,8 @@ class Rosumi
 
       sleep(5)
       self.updateDevices()
+      raise "Invalid device number!" if @devices[device_num].nil?  
+      raise "There is no location data for this device (#{@devices[device_num]['name']})" if @devices[device_num]['location'].nil?
     end while (@devices[device_num]['location']['locationFinished'] == 'false') 
 
     loc = {
