@@ -5,6 +5,7 @@ require 'pp'
 require "./rosumi.rb"
 
 $options = { }
+$options[:device] = 0
 $options[:verbose] = false
 @parser = OptionParser.new do |opts|
 
@@ -20,6 +21,10 @@ $options[:verbose] = false
     $options[:password] = v
   end
 
+  opts.on('-d', "--device DEVICE_NR", "Device number") do |v|
+    $options[:device] = v.to_i
+  end
+
 end
 
 begin
@@ -32,6 +37,7 @@ begin
     puts @parser
     exit 1
   end
+
 rescue OptionParser::InvalidOption, OptionParser::MissingArgument
   puts $!.to_s
   puts @parser
@@ -41,7 +47,7 @@ end
 r = Rosumi.new($options[:username], $options[:password], $options[:verbose])
 #=> #<Rosumi:0x0000010083b048 @user="username", @pass="password", @devices=[], @http=#<Net::HTTP fmipmobile.me.com:443 open=false> 
 
-puts r.locate
+puts r.locate($options[:device])
 #=> {:name=>"Steve’s iPhone", :latitude=>23.5423458632445456, :longitude=>23.923433562234181818, :accuracy=>80.0, :timestamp=>1279839672446, :position_type=>"Wifi"} 
 
 #####
