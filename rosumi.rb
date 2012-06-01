@@ -11,9 +11,10 @@ class Rosumi
   
   attr_accessor :devices
   
-  def initialize(user, pass)
+  def initialize(user, pass, verbose = false)
     @user = user
     @pass = pass
+    @verbose = verbose
     
     @devices = []
 
@@ -39,8 +40,8 @@ class Rosumi
                                 }};
     
     json_devices = self.post("/fmipservice/device/#{@user}/initClient", post)
-    puts 'posted'
-    puts json_devices
+    puts 'posted' if @verbose
+    puts json_devices if @verbose
     @devices = [];
     json_devices['content'].each { |json_device| @devices << json_device }
     
@@ -49,8 +50,8 @@ class Rosumi
   end
   
   def post(path, data)
-		auth = Base64.encode64(@user+':'+@pass);
-		puts auth;
+		auth = Base64.encode64(@user+':'+@pass)
+		puts auth if @verbose
 		headers = {
       'Content-Type' => 'application/json; charset=utf-8',
       'X-Apple-Find-Api-Ver' => '2.0',
@@ -62,7 +63,7 @@ class Rosumi
       'Accept-Language' => 'en-us',
       'Authorization' => "Basic #{auth}"
     }
-    puts "Path = #{path}"   
+    puts "Path = #{path}" if @verbose   
 
     unless @partition
       @partition = fetchPartition(path, JSON.generate(data), headers) 
@@ -116,11 +117,11 @@ private
   
   def fetchPartition(path, data, headers)
 
-    puts 'fetching partition'
+    puts 'fetching partition' if @verbose
 
     response = @http.post(path, data, headers)
 
-    puts "got partition #{response['X-Apple-MMe-Host']}"
+    puts "got partition #{response['X-Apple-MMe-Host']}" if @verbose
     
     response['X-Apple-MMe-Host']
 
